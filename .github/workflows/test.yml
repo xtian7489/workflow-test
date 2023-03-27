@@ -1,17 +1,17 @@
-name: Ping
-env:
-  REPO_OWNER: xtian7489
-  REPO_NAME: workflow-test
-  GITHUB_TOKEN: ${{ secrets.TOKEN }}
+name: My Workflow
 on:
-  repository_dispatch:
-    types: [run-ping]
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'A message to display'
+        required: true
+
 jobs:
-  ping:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install packages
-        run: npm ci
-      - name: Run Ping
-        run: npm run ping
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Display message
+      run: |
+        echo "${{ github.event.inputs.message }}"
